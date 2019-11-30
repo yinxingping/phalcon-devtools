@@ -1,198 +1,123 @@
-# Phalcon Devtools
+# 关于 yinxingping/phalcon-devtools
 
-[![Discord](https://img.shields.io/discord/310910488152375297?label=Discord)](http://phalcon.link/discord)
-[![Latest Version](https://img.shields.io/packagist/v/phalcon/devtools.svg?style=flat-square)][:devtools:]
-[![Software License](https://img.shields.io/badge/license-BSD--3-brightgreen.svg?style=flat-square)][:license:]
-[![Total Downloads](https://img.shields.io/packagist/dt/phalcon/devtools.svg?style=flat-square)][:packagist:]
-[![Daily Downloads](https://img.shields.io/packagist/dd/phalcon/devtools.svg?style=flat-square)][:packagist:]
-[![Build Status](https://api.travis-ci.org/phalcon/phalcon-devtools.svg?branch=master)][:travis:]
+本项目基于[Phalcon](https://phalcon.io)的官方开发工具[phalcon-devtools](https://github.com/phalcon/phalcon-devtools)二次开发，适用于中国开发者进行API、WEB、CLI开发，利用此工具可大幅提升团队/个人开发效率。
 
-![Phalcon WebTools](https://cloud.githubusercontent.com/assets/1256298/18617851/b7d31558-7de2-11e6-83e0-30e5902af714.png)
+一、全局性增加的功能
+---
+#### 1、增加.env配置
 
+官方提供的项目框架没有将开发、测试、生产环境的配置文件分开，对于利用github公开方式托管代码的个人和小团队来说配置文件更涉及安全性，yinxingping/phalcon-devtools借助`vlucas/phpdotenv`实现配置和代码分开，开发环境的.env开发人员自己管理，测试和生产环境的.env由专门的运维人员管理和发布。
 
-## What's Phalcon?
+#### 2、增加默认时区
 
-Phalcon PHP is a web framework delivered as a C extension providing high performance and lower resource consumption.
+时区默认设置为"中国-上海"，避免时间混乱问题
 
-## What are Devtools?
+#### 3、增加日志处理
 
-This tools provide you useful scripts to generate code helping to develop faster and easy applications that use
-with Phalcon framework.
+根据.env中的APP_ENV设置（dev/test/production），production仅输出重要的日志，且日志默认输出到项目根目录下的logs文件夹，名称按APP_NAME和日期定义
 
-## Requirements
+#### 4、项目框架自动创建README.md
 
-* PHP >= 5.5
+可以利用README.md对项目功能、环境、部署等进行说明
+
+#### 5、顶层命名空间的修改
+
+官方开发工具若项目名称为project_name，选择"modules"应用类型时，顶层命名空间为Project_name，yinxingping/phalcon-devtools中改为ProjectName
+
+#### 6、替换依赖注入器
+
+官方开发工具为了降低初学者学习门槛，直接使用`Phalcon\Di\FactoryDefault`容器，这个容器默认包含了22个服务；yinxingping/phalcon-devtools改为空的容器`Phalcon\Di`,根据项目需求用到哪个服务注册哪个服务，最大程度降低占用，提升性能
+
+二、全局性取消的功能
+---
+* 取消webtools工具
+* 取消ini支持
+
+三、不同类型项目框架的具体修改
+---
+* [DB类项目框架](./DB.md)
+* [API类项目框架](./API.md)
+* [WEB类项目框架](./WEB.md)
+
+四、yinxingping/phalcon-devtools项目框架类型简介
+---
+#### 1、cli
+适合开发命令行应用，如爬虫、后台处理等
+
+#### 2、microweb
+适合开发微网站，如官网等
+
+#### 3、web
+适合开发功能完整的网站
+
+#### 4、simpleapi
+适合开发不使用数据库的简单API，如文件请求、搜索引擎等的封装接口
+
+#### 5、baseapi
+适合开发封装底层数据库访问的基础API
+
+#### 6、fullapi
+适合开发直接为客户端提供服务的中间API
+
+#### 7、modules
+适合开发多模块的复杂应用，目前提供一个CLI模块和一个前端站点模块，可以通过phalcon的模块命令添加新模块
+
+五、系统要求
+---
+* PHP >= 7.0
 * Phalcon >= 3.3.0
+* Composer
 
-## Installing via Composer
+六、推荐环境配置
+---
+* 操作系统：Linux
+* Web服务器：Nginx + PHP-FPM 7.0+
+* Phalcon >= 3.3.0
+* 数据库：MySQL
+* 缓存和Session：Redis
 
-Install composer in a common location or in your project:
-
-```bash
-curl -s http://getcomposer.org/installer | php
-```
-
-Create the composer.json file as follows:
-
-```json
-{
-    "require-dev": {
-        "phalcon/devtools": "~3.4"
-    }
-}
-```
-
-If you are still using Phalcon 2.0.x, create a `composer.json` with the following instead:
-
-```json
-{
-    "require-dev": {
-        "phalcon/devtools": "^2.0"
-    }
-}
-```
-
-Run the composer installer:
+七、安装和配置
+---
 
 ```bash
-php composer.phar install
+# 以下配置可用于linux和macOS
+
+# 第一步：下载yinxingping/phalcon-devtools到指定目录，如/home/myname/public
+cd /home/myname/public;
+git clone git@github.com:yinxingping/phalcon-devtools.git
+
+# 第二步：配置~/.bashrc,添加以下项
+export PTOOLSPATH=/home/myname/public/phalcon-devtools
+export PATH=$PTOOLSPATH:$PATH
+
+# 第三步：保存~/.bashrc后使设置生效
+source ~/.bashrc
+
+# 第四步：验证
+cd /home/myname/Workspace;
+phalcon project my-first-phalcon microweb
+
 ```
 
-## Build `.phar`
+看到绿色的"Success: Project 'my-first-phalcon' was successfully created..."即表示成功。
 
-Install composer and box in a common location or in your project:
-```bash
-curl -s http://getcomposer.org/installer | php
-bin/composer install
-```
+八、phpstorm自动完成设置
+---
+1. 下载[Phalcon框架接口包](https://github.com/phalcon/ide-stubs)；
+2. phpstorm新建项目后，右键点击 *External Libraries*，选择 *Configure PHP Include Paths*
+3. 点击 *+*，选择*ide-stubs*下的*src/Phalcon*，即可将接口导入
+4. 之后开发过程即可使用Phalcon框架的代码提示和自动完成
 
-Build phar file `phalcon-devtools`
-```bash
-bin/box build -v
-chmod +xr ./phalcon.phar
-# Test it!
-php ./phalcon.phar
-```
 
-## Installation via Git
+九、相关链接
+---
 
-Phalcon Devtools can be installed by using Git.
+Phalcon官网：
+https://phalcon.io
 
-Just clone the repo and checkout the current branch:
+Phalcon框架：
+https://github.com/phalcon/cphalcon
 
-```bash
-cd ~
-git clone https://github.com/phalcon/phalcon-devtools.git
-cd phalcon-devtools
-```
+Phalcon-devtools官方开发工具：
+https://github.com/phalcon/phalcon-devtools
 
-This method requires a little bit more of setup. Probably the best way would be to symlink
-the `phalcon` file to a directory in your `PATH`, so you can issue phalcon commands in each directory
-where a phalcon project resides.
-
-```bash
-cd phalcon-devtools
-ln -s $(pwd)/phalcon /usr/bin/phalcon
-chmod ugo+x /usr/bin/phalcon
-```
-
-If you get a `"phalcon: command not found"` message while creating the symlink, make an alias.
-
-```bash
-alias phalcon=/home/[USERNAME]/phalcon-devtools/phalcon
-```
-
-## Usage
-
-To get a list of available commands just execute following:
-
-```bash
-phalcon commands help
-```
-
-This command should display something similar to:
-
-```sh
-$ phalcon --help
-
-Phalcon DevTools (3.4.0)
-
-Help:
-  Lists the commands available in Phalcon devtools
-
-Available commands:
-  info             (alias of: i)
-  commands         (alias of: list, enumerate)
-  controller       (alias of: create-controller)
-  module           (alias of: create-module)
-  model            (alias of: create-model)
-  all-models       (alias of: create-all-models)
-  project          (alias of: create-project)
-  scaffold         (alias of: create-scaffold)
-  migration        (alias of: create-migration)
-  webtools         (alias of: create-webtools)
-  serve            (alias of: server)
-  console          (alias of: shell, psysh)
-```
-
-## Database adapter
-
-Should add `adapter` parameter in your `db` config file (if you use not MySQL database).
-
-For PostgreSQL it will be something like:
-
-```php
-$config = [
-  'host'     => 'localhost',
-  'dbname'   => 'my_db_name',
-  'username' => 'my_db_user',
-  'password' => 'my_db_user_password',
-  'adapter'  => 'Postgresql'
-];
-```
-
-## Configuration file
-
-By creating **config.json** or any other configuration file called **config** in root project you can set options for all possible commands, for example:
-
-```json
-{
-  "migration" : {
-    "migrations": "App/Migrations",
-    "config": "App/Config/db.ini"
-  },
-  "controller" : {
-    "namespace": "Phalcon\\Test",
-    "directory": "App/Controllers",
-    "base-class": "App\\MyAbstractController"
-  }
-}
-```
-
-And then you can use use `phalcon migration run` or `phalcon controller SomeClass` and those commands will be executed with options from file. Arguments provided by developer from command line will overwrite existing one in file.
-
-## Sponsors
-
-Become a sponsor and get your logo on our README on Github with a link to your site. [[Become a sponsor](https://opencollective.com/phalcon#sponsor)]
-
-<a href="https://opencollective.com/phalcon/#contributors">
-<img src="https://opencollective.com/phalcon/tiers/sponsors.svg?avatarHeight=48&width=800">
-</a>
-
-## Backers
-
-Support us with a monthly donation and help us continue our activities. [[Become a backer](https://opencollective.com/phalcon#backer)]
-
-<a href="https://opencollective.com/phalcon/#contributors">
-<img src="https://opencollective.com/phalcon/tiers/backers.svg?avatarHeight=48&width=800&height=200">
-</a>
-
-## License
-
-Phalcon Developer Tools is open source software licensed under the [New BSD License][:license:].<br>
-© Phalcon Framework Team and contributors
-
-[:packagist:]: https://packagist.org/packages/phalcon/devtools
-[:devtools:]: https://github.com/phalcon/phalcon-devtools
-[:license:]: https://github.com/phalcon/phalcon-devtools/blob/master/LICENSE.txt
-[:travis:]: https://travis-ci.org/phalcon/phalcon-devtools

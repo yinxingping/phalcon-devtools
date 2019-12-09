@@ -42,12 +42,12 @@ class Project extends Command
     {
         return [
             'name=s'            => 'Name of the new project',
-            'enable-webtools'   => 'Determines if webtools should be enabled [optional]',
+            //'enable-webtools'   => 'Determines if webtools should be enabled [optional]',
             'directory=s'       => 'Base path on which project will be created [optional]',
-            'type=s'            => 'Type of the application to be generated (cli, micro, simple, modules)',
-            'template-path=s'   => 'Specify a template path [optional]',
-            'template-engine=s' => 'Define the template engine, default phtml (phtml, volt) [optional]',
-            'use-config-ini'    => 'Use a ini file as configuration file [optional]',
+            'type=s'            => 'Type of the application to be generated (baseapi, api, simpleapi, cli, web)',
+            //'template-path=s'   => 'Specify a template path [optional]',
+            //'template-engine=s' => 'Define the template engine, default phtml (phtml, volt) [optional]',
+            //'use-config-ini'    => 'Use a ini file as configuration file [optional]',
             'trace'             => 'Shows the trace of the framework in case of exception [optional]',
             'help'              => 'Shows this help [optional]',
         ];

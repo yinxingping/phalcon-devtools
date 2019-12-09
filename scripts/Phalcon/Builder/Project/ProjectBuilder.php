@@ -122,7 +122,9 @@ abstract class ProjectBuilder
 
             $str = file_get_contents($getFile);
             if ($name) {
-                $namespace = ucfirst($name);
+                //$namespace = ucfirst($name);
+                //命名空间使用驼峰命名模式，如shool-base-api/school_base_api命名空间为SchoolBaseApi
+                $namespace = $this->generateNamespace($name);
                 if (strtolower(trim($name)) == 'default') {
                     $namespace = 'MyDefault';
                 }
@@ -143,5 +145,21 @@ abstract class ProjectBuilder
         }
 
         return $this;
+    }
+
+    /**
+     * 根据项目名称计算命名空间
+     * @param $name
+     * @return string
+     */
+    private function generateNamespace($name)
+    {
+        $nameParts = preg_split("/[\-_]/", $name);
+        $namespace = '';
+        foreach ($nameParts as $part) {
+            $namespace .= ucfirst($part);
+        }
+
+        return $namespace;
     }
 }

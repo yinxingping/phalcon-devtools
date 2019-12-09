@@ -20,10 +20,11 @@
 
 namespace Phalcon\Builder;
 
+use Phalcon\Builder\Project\BaseApi;
+use Phalcon\Builder\Project\Api;
+use Phalcon\Builder\Project\SimpleApi;
 use Phalcon\Builder\Project\Cli;
-use Phalcon\Builder\Project\Micro;
-use Phalcon\Builder\Project\Simple;
-use Phalcon\Builder\Project\Modules;
+use Phalcon\Builder\Project\Web;
 use Phalcon\Utils\FsUtils;
 use SplFileInfo;
 
@@ -36,26 +37,28 @@ use SplFileInfo;
  */
 class Project extends Component
 {
-    const TYPE_MICRO   = 'micro';
-    const TYPE_SIMPLE  = 'simple';
-    const TYPE_MODULES = 'modules';
+    const TYPE_BASEAPI = 'baseapi';
+    const TYPE_API     = 'api';
+    const TYPE_SIMPLEAPI     = 'simpleapi';
     const TYPE_CLI     = 'cli';
+    const TYPE_WEB     = 'web';
 
     /**
      * Current Project Type
      * @var string
      */
-    private $currentType = self::TYPE_SIMPLE;
+    private $currentType = self::TYPE_BASEAPI;
 
     /**
      * Available Project Types
      * @var array
      */
     private $types = [
-        self::TYPE_MICRO   => Micro::class,
-        self::TYPE_SIMPLE  => Simple::class,
-        self::TYPE_MODULES => Modules::class,
+        self::TYPE_BASEAPI => BaseApi::class,
+        self::TYPE_API     => Api::class,
+        self::TYPE_SIMPLEAPI     => SimpleApi::class,
         self::TYPE_CLI     => Cli::class,
+        self::TYPE_WEB     => Web::class,
     ];
 
     /**
@@ -120,12 +123,16 @@ class Project extends Component
 
         $root = new SplFileInfo($this->path->getRootPath('public'));
         $fsUtils = new FsUtils();
-        $fsUtils->setDirectoryPermission($root, ['css' => 0777, 'js' => 0777]);
+        //避免api/cli类项目生成css/js目录
+        if (!preg_match('/(api/cli)/', $this->currentType)) {
+            $fsUtils->setDirectoryPermission($root, ['css' => 0777, 'js' => 0777]);
+        }
 
         if ($success === true) {
-            $sprintMessage = "Project '%s' was successfully created.\n" .
-                "Please choose a password and username to use Database connection." .
-                "Used default:'root' without password.";
+            //项目创建成功提示
+            $sprintMessage = "Project '%s' was successfully created." .
+                "Please run 'composer install' to install relevant dependencies packages in this project directory.";
+
             $this->notifySuccess(sprintf($sprintMessage, $this->options->get('name')));
         }
 

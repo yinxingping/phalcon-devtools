@@ -15,22 +15,19 @@
   +------------------------------------------------------------------------+
   | Authors: Andres Gutierrez <andres@phalconphp.com>                      |
   |          Eduar Carvajal <eduar@phalconphp.com>                         |
-  |          Serghei Iakovlev <serghei@phalconphp.com>                     |
   +------------------------------------------------------------------------+
 */
 
 namespace Phalcon\Builder\Project;
 
-use Phalcon\Script\Color;
-
 /**
- * Cli
+ * Api
  *
- * Builder to create Cli application skeletons
+ * Builder to create Api application skeletons
  *
  * @package Phalcon\Builder\Project
  */
-class Cli extends ProjectBuilder
+class Api extends ProjectBuilder
 {
     /**
      * Project directories
@@ -39,10 +36,10 @@ class Cli extends ProjectBuilder
     protected $projectDirectories = [
         'app',
         'app/config',
-        'app/tasks',
-        'app/models',
-        'schemas',
-        '.phalcon',
+        'app/controllers',
+        'app/library',
+        'public',
+        '.phalcon'
     ];
 
     /**
@@ -55,16 +52,28 @@ class Cli extends ProjectBuilder
         //仅支持config.php
         $type = $this->options->get('useConfigIni') ? 'ini' : 'php';
 
-        $getFile = $this->options->get('templatePath') . '/project/cli/config.' . $type;
+        $getFile = $this->options->get('templatePath') . '/project/api/config.' . $type;
         $putFile = $this->options->get('projectPath') . 'app/config/config.' . $type;
-        $this->generateFile($getFile, $putFile);
+        $this->generateFile($getFile, $putFile, $this->options->get('name'));
 
-        $getFile = $this->options->get('templatePath') . '/project/cli/services.php';
+        $getFile = $this->options->get('templatePath') . '/project/api/services.php';
         $putFile = $this->options->get('projectPath') . 'app/config/services.php';
+        $this->generateFile($getFile, $putFile, $this->options->get('name'));
+
+        $getFile = $this->options->get('templatePath') . '/project/api/loader.php';
+        $putFile = $this->options->get('projectPath') . 'app/config/loader.php';
         $this->generateFile($getFile, $putFile);
 
-        $getFile = $this->options->get('templatePath') . '/project/cli/loader.php';
-        $putFile = $this->options->get('projectPath') . 'app/config/loader.php';
+        $getFile = $this->options->get('templatePath') . '/project/api/app.php';
+        $putFile = $this->options->get('projectPath') . 'app/app.php';
+        $this->generateFile($getFile, $putFile);
+
+        $getFile = $this->options->get('templatePath') . '/project/api/constants.php';
+        $putFile = $this->options->get('projectPath') . 'app/config/constants.php';
+        $this->generateFile($getFile, $putFile);
+
+        $getFile = $this->options->get('templatePath') . '/project/api/errcode.php';
+        $putFile = $this->options->get('projectPath') . 'app/config/errcode.php';
         $this->generateFile($getFile, $putFile);
 
         return $this;
@@ -75,55 +84,35 @@ class Cli extends ProjectBuilder
      *
      * @return $this
      */
-    private function createBootstrapFiles()
+    private function createBootstrapFile()
     {
-        $getFile = $this->options->get('templatePath') . '/project/cli/bootstrap.php';
-        $putFile = $this->options->get('projectPath') . 'app/bootstrap.php';
+        $getFile = $this->options->get('templatePath') . '/project/api/index.php';
+        $putFile = $this->options->get('projectPath') . 'public/index.php';
         $this->generateFile($getFile, $putFile);
 
         return $this;
     }
 
     /**
-     * Create Default Tasks
-     *
-     * @return $this
+     * create controllers
      */
-    private function createDefaultTasks()
+    private function createControllers()
     {
-        $getFile = $this->options->get('templatePath') . '/project/cli/MainTask.php';
-        $putFile = $this->options->get('projectPath') . 'app/tasks/MainTask.php';
+        $getFile = $this->options->get('templatePath') . '/project/api/ControllerBase.php';
+        $putFile = $this->options->get('projectPath') . 'app/controllers/ControllerBase.php';
         $this->generateFile($getFile, $putFile);
 
-        $getFile = $this->options->get('templatePath') . '/project/cli/VersionTask.php';
-        $putFile = $this->options->get('projectPath') . 'app/tasks/VersionTask.php';
+        $getFile = $this->options->get('templatePath') . '/project/api/IndexController.php';
+        $putFile = $this->options->get('projectPath') . 'app/controllers/IndexController.php';
         $this->generateFile($getFile, $putFile);
 
         return $this;
     }
 
-    /**
-     * Create a launcher file to launch the application simply with ./project/application
-     *
-     * @return $this
-     */
-    private function createLauncher()
+    private function createLibrary()
     {
-        $getFile = $this->options->get('templatePath') . '/project/cli/launcher';
-        $putFile = $this->options->get('projectPath') . 'run';
-        $this->generateFile($getFile, $putFile);
-        chmod($putFile, 0755);
-
-        return $this;
-    }
-
-    /**
-     * create model base
-     */
-    private function createModelBase()
-    {
-        $getFile = $this->options->get('templatePath') . '/project/cli/ModelBase.php';
-        $putFile = $this->options->get('projectPath') . 'app/models/ModelBase.php';
+        $getFile = $this->options->get('templatePath') . '/project/api/API.php';
+        $putFile = $this->options->get('projectPath') . 'app/library/API.php';
         $this->generateFile($getFile, $putFile);
 
         return $this;
@@ -134,19 +123,19 @@ class Cli extends ProjectBuilder
      */
     private function createAdditionals()
     {
-        $getFile = $this->options->get('templatePath') . '/project/cli/composer.json';
+        $getFile = $this->options->get('templatePath') . '/project/api/composer.json';
         $putFile = $this->options->get('projectPath') . 'composer.json';
         $this->generateFile($getFile, $putFile);
 
-        $getFile = $this->options->get('templatePath') . '/project/cli/env.example';
+        $getFile = $this->options->get('templatePath') . '/project/api/env.example';
         $putFile = $this->options->get('projectPath') . '.env';
         $this->generateFile($getFile, $putFile, $this->options->get('name'));
 
-        $getFile = $this->options->get('templatePath') . '/project/cli/env.example';
+        $getFile = $this->options->get('templatePath') . '/project/api/env.example';
         $putFile = $this->options->get('projectPath') . 'env.example';
         $this->generateFile($getFile, $putFile, $this->options->get('name'));
 
-        $getFile = $this->options->get('templatePath') . '/project/cli/README.md';
+        $getFile = $this->options->get('templatePath') . '/project/api/README.md';
         $putFile = $this->options->get('projectPath') . 'README.md';
         $this->generateFile($getFile, $putFile);
 
@@ -162,15 +151,11 @@ class Cli extends ProjectBuilder
     {
         $this
             ->buildDirectories()
-            ->getVariableValues()
             ->createConfig()
-            ->createBootstrapFiles()
-            ->createDefaultTasks()
-            ->createAdditionals()
-            ->createLauncher();
-
-        $sprintMessage = 'You can create a symlink to %s to invoke the application';
-        print Color::success(sprintf($sprintMessage, $this->options->get('projectPath') . 'run')) . PHP_EOL;
+            ->createBootstrapFile()
+            ->createLibrary()
+            ->createControllers()
+            ->createAdditionals();
 
         return true;
     }

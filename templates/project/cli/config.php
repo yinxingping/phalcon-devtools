@@ -1,24 +1,23 @@
 <?php
 
+defined('BASE_PATH') || define('BASE_PATH', getenv('BASE_PATH') ?: realpath(dirname(__FILE__) . '/../..'));
+defined('APP_PATH') || define('APP_PATH', BASE_PATH . '/app');
+
 return new \Phalcon\Config([
-    'database' => [
-      'adapter'     => 'Mysql',
-      'host'        => 'localhost',
-      'username'    => 'root',
-      'password'    => '',
-      'dbname'      => '@@name@@',
-      'charset'     => 'utf8',
-    ],
     'version' => '1.0',
 
-    /**
-     * if true, then we print a new line at the end of each execution
-     *
-     * If we dont print a new line,
-     * then the next command prompt will be placed directly on the left of the output
-     * and it is less readable.
-     *
-     * You can disable this behaviour if the output of your application needs to don't have a new line at end
+    /*
+     * model生成时还不支持.env，所以只能以系统getenv方式，且项目生成后这里的默认值要设置成开发环境的相应值
+     * ??支持null, ?:支持false
      */
-    'printNewLine' => true
+    'database' => [
+        'adapter'    => 'Mysql',
+        'host'     => getenv('DB_HOST') ?: 'localhost',
+        'username' => getenv('DB_USERNAME') ?: 'root',
+        'password' => getenv('DB_PASSWORD') ?: 'test123456',
+        'dbname'   => getenv('DB_DATABASE') ?: '',
+        'charset'    => 'utf8',
+    ],
+
 ]);
+

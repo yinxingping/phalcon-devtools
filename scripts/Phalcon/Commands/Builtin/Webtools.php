@@ -20,6 +20,7 @@
 
 namespace Phalcon\Commands\Builtin;
 
+use MongoDB\Driver\Exception\CommandException;
 use Phalcon\Script\Color;
 use Phalcon\Commands\Command;
 use Phalcon\Web\Tools;

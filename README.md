@@ -14,17 +14,13 @@
 
 #### 3、增加日志处理
 
-根据.env中的APP_ENV设置（dev/test/production），production仅输出重要的日志，且日志默认输出到项目根目录下的logs文件夹，名称按APP_NAME和日期定义
+根据.env中的APP_ENV设置（dev/test/production），production仅输出重要的日志；可以配置日志文件的位置
 
 #### 4、项目框架自动创建README.md
 
 可以利用README.md对项目功能、环境、部署等进行说明
 
-#### 5、顶层命名空间的修改
-
-官方开发工具若项目名称为project_name，选择"modules"应用类型时，顶层命名空间为Project_name，yinxingping/phalcon-devtools中改为ProjectName
-
-#### 6、替换依赖注入器
+#### 5、替换依赖注入器
 
 官方开发工具为了降低初学者学习门槛，直接使用`Phalcon\Di\FactoryDefault`容器，这个容器默认包含了22个服务；yinxingping/phalcon-devtools改为空的容器`Phalcon\Di`,根据项目需求用到哪个服务注册哪个服务，最大程度降低占用，提升性能
 
@@ -44,39 +40,28 @@
 #### 1、cli
 适合开发命令行应用，如爬虫、后台处理等
 
-#### 2、microweb
-适合开发微网站，如官网等
-
-#### 3、web
+#### 2、web
 适合开发功能完整的网站
 
-#### 4、simpleapi
+#### 3、simpleapi
 适合开发不使用数据库的简单API，如文件请求、搜索引擎等的封装接口
 
-#### 5、baseapi
+#### 4、baseapi
 适合开发封装底层数据库访问的基础API
 
-#### 6、fullapi
-适合开发直接为客户端提供服务的中间API
+#### 5、api
+适合开发直接为客户端提供服务前端API
 
-#### 7、modules
-适合开发多模块的复杂应用，目前提供一个CLI模块和一个前端站点模块，可以通过phalcon的模块命令添加新模块
-
-五、系统要求
----
-* PHP >= 7.0
-* Phalcon >= 3.3.0
-* Composer
-
-六、推荐环境配置
+五、推荐环境配置
 ---
 * 操作系统：Linux
 * Web服务器：Nginx + PHP-FPM 7.0+
-* Phalcon >= 3.3.0
+* Phalcon >= 3.3
 * 数据库：MySQL
 * 缓存和Session：Redis
+* Composer
 
-七、安装和配置
+六、安装和配置
 ---
 
 ```bash
@@ -97,11 +82,12 @@ source ~/.bashrc
 cd /home/myname/Workspace;
 phalcon project my-first-phalcon microweb
 
+# 第五步：将.env文件加入到.gitignore中
 ```
 
 看到绿色的"Success: Project 'my-first-phalcon' was successfully created..."即表示成功。
 
-八、phpstorm自动完成设置
+七、phpstorm自动完成设置
 ---
 1. 下载[Phalcon框架接口包](https://github.com/phalcon/ide-stubs)；
 2. phpstorm新建项目后，右键点击 *External Libraries*，选择 *Configure PHP Include Paths*
@@ -109,7 +95,7 @@ phalcon project my-first-phalcon microweb
 4. 之后开发过程即可使用Phalcon框架的代码提示和自动完成
 
 
-九、相关链接
+八、相关链接
 ---
 
 Phalcon官网：

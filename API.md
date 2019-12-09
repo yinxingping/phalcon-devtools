@@ -36,5 +36,5 @@ API类项目框架都采用了Phalcon提供的MVC微应用框架（Phalcon/Mvc/M
 #### 4、目前提供的API类项目模版
 * simpleapi
 * baseapi
-* fullapi
+* api
 

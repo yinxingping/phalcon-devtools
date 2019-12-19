@@ -10,6 +10,11 @@ include(BASE_PATH . '/vendor/autoload.php');
 $dotenv = new \Dotenv\Dotenv(BASE_PATH);
 $dotenv->load();
 
+include APP_PATH . '/config/constants.php';
+include APP_PATH . '/config/errcode.php';
+include APP_PATH . '/config/rules.php';
+
+
 define('LOG_PATH', getenv('LOG_PATH', '/var/log/phalcon'));
 ini_set('date.timezone', 'Asia/Shanghai');
 ini_set('display_errors', 'off');

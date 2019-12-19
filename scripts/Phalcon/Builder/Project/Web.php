@@ -79,6 +79,10 @@ class Web extends ProjectBuilder
         $putFile = $this->options->get('projectPath') . 'app/config/errcode.php';
         $this->generateFile($getFile, $putFile);
 
+        $getFile = $this->options->get('templatePath') . '/project/web/rules.php';
+        $putFile = $this->options->get('projectPath') . 'app/config/rules.php';
+        $this->generateFile($getFile, $putFile);
+
         return $this;
     }
 

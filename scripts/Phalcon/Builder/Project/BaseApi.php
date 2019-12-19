@@ -78,6 +78,10 @@ class BaseApi extends ProjectBuilder
         $putFile = $this->options->get('projectPath') . 'app/config/errcode.php';
         $this->generateFile($getFile, $putFile);
 
+        $getFile = $this->options->get('templatePath') . '/project/baseapi/rules.php';
+        $putFile = $this->options->get('projectPath') . 'app/config/rules.php';
+        $this->generateFile($getFile, $putFile);
+
         return $this;
     }
 

@@ -4,9 +4,6 @@ defined('BASE_PATH') || define('BASE_PATH', getenv('BASE_PATH') ?: realpath(dirn
 defined('APP_PATH') || define('APP_PATH', BASE_PATH . '/app');
 defined('LOG_PATH') || define('LOG_PATH', getenv('LOG_PATH', '/var/log/phalcon'));
 
-include APP_PATH . '/config/constants.php';
-include APP_PATH . '/config/errcode.php';
-
 $appName = getenv('APP_NAME', '@@name@@');
 
 return new \Phalcon\Config([

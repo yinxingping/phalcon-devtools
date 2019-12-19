@@ -76,6 +76,10 @@ class Api extends ProjectBuilder
         $putFile = $this->options->get('projectPath') . 'app/config/errcode.php';
         $this->generateFile($getFile, $putFile);
 
+        $getFile = $this->options->get('templatePath') . '/project/api/rules.php';
+        $putFile = $this->options->get('projectPath') . 'app/config/rules.php';
+        $this->generateFile($getFile, $putFile);
+
         return $this;
     }
 

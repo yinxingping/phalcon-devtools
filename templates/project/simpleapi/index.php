@@ -11,6 +11,8 @@ $dotenv = new Dotenv\Dotenv(BASE_PATH);
 $dotenv->load();
 
 define('LOG_PATH', getenv('LOG_PATH', '/var/log/phalcon'));
+include APP_PATH . '/config/errcode.php';
+
 ini_set('date.timezone', 'Asia/Shanghai');
 ini_set('display_errors', 'off');
 ini_set('error_log', LOG_PATH . '/' .getenv('APP_NAME', '@@name@@') . '_error_' . date('Ymd') . '.log');

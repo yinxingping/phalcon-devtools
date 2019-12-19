@@ -1,7 +1,5 @@
 <?php
 
-include APP_PATH . '/config/errcode.php';
-
 return new \Phalcon\Config([
     'version' => '1.0',
     'appName' => $appName,

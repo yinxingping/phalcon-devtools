@@ -10,6 +10,11 @@ include(BASE_PATH . '/vendor/autoload.php');
 $dotenv = new Dotenv\Dotenv(BASE_PATH);
 $dotenv->load();
 
+//导入常量和参数验证规则
+include APP_PATH . '/config/constants.php';
+include APP_PATH . '/config/errcode.php';
+include APP_PATH . '/config/rules.php';
+
 define('LOG_PATH', getenv('LOG_PATH', '/var/log/phalcon'));
 ini_set('display_errors', 'off');
 ini_set('error_log', LOG_PATH . '/' .getenv('APP_NAME', '@@name@@') . '_error_' . date('Ymd') . '.log');

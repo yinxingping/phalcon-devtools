@@ -14,9 +14,9 @@ return new \Phalcon\Config([
         'adapter'    => 'Mysql',
         'host'     => getenv('DB_HOST') ?: 'localhost',
         'username' => getenv('DB_USERNAME') ?: 'root',
-        'password' => getenv('DB_PASSWORD') ?: 'test123456',
+        'password' => getenv('DB_PASSWORD') ?: 'Test123456',
         'dbname'   => getenv('DB_DATABASE') ?: '',
-        'charset'    => 'utf8',
+        'charset'    => 'utf8mb4',
     ],
 
 ]);

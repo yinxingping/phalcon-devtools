@@ -6,7 +6,7 @@
 
 0. PHP-FPM >= 7.2
 1. PHP框架：Phalcon >= 3.3
-2. 开发工具：[school-phalcon-devtools](https://code.aliyun.com/phalcon/school-phalcon-devtools)
+2. 开发工具：[yinxingping/phalcon-devtools](https://github.com/yinxingping/phalcon-devtools)
 
 ## 注意事项
 

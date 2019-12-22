@@ -123,8 +123,8 @@ class Project extends Component
 
         $root = new SplFileInfo($this->path->getRootPath('public'));
         $fsUtils = new FsUtils();
-        //避免api/cli类项目生成css/js目录
-        if (!preg_match('/(api/cli)/', $this->currentType)) {
+        //仅web类项目生成css/js目录
+        if (preg_match('/web/', $this->currentType)) {
             $fsUtils->setDirectoryPermission($root, ['css' => 0777, 'js' => 0777]);
         }
 

@@ -16,7 +16,7 @@ include APP_PATH . '/config/errcode.php';
 include APP_PATH . '/config/rules.php';
 
 ini_set('display_errors', 'off');
-ini_set('error_log', LOG_PATH . '/' .getenv('APP_NAME', '@@name@@') . '_error_' . date('Ymd') . '.log');
+ini_set('error_log', LOG_PATH . '/' .getenv('APP_NAME') . '_error_' . date('Ymd') . '.log');
 if (getenv('APP_ENV') == 'production') {
     error_reporting(E_ALL & ~E_DEPRECATED & ~E_STRICT);
 } else {

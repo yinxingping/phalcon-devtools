@@ -15,7 +15,7 @@ include APP_PATH . '/config/errcode.php';
 
 ini_set('date.timezone', 'Asia/Shanghai');
 ini_set('display_errors', 'off');
-ini_set('error_log', LOG_PATH . '/' .getenv('APP_NAME', '@@name@@') . '_error_' . date('Ymd') . '.log');
+ini_set('error_log', LOG_PATH . '/' .getenv('APP_NAME') . '_error_' . date('Ymd') . '.log');
 if (getenv('APP_ENV') == 'production') {
     error_reporting(E_ALL & ~E_DEPRECATED & ~E_STRICT);
 } else {

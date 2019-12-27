@@ -475,6 +475,8 @@ class Model extends Component
                 $uses[] = $snippet->getUseAs(EmailValidator::class, 'EmailValidator');
             }
         }
+        //唯一性验证，若无可生成后手动删除
+        $validations[] = $snippet->getValidateUnique();
         if (count($validations)) {
             $validations[] = $snippet->getValidationEnd();
         }
@@ -556,7 +558,7 @@ class Model extends Component
             $content .= join('', $setters) . join('', $getters);
         }
 
-        $content .= $validationsCode . $initCode;
+        $content .= $initCode . $validationsCode;
         foreach ($methodRawCode as $methodCode) {
             $content .= $methodCode;
         }

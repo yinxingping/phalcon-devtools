@@ -34,11 +34,6 @@ class Snippet
     public function getModelSource($source)
     {
         $getSource = <<<EOD
-    /**
-     * Returns table name mapped in the model.
-     *
-     * @return string
-     */
     public function getSource()
     {
         return '%s';
@@ -51,12 +46,6 @@ EOD;
     public function getSetter($originalFieldName, $fieldName, $type, $setterName)
     {
         $templateSetter = <<<EOD
-    /**
-     * Method to set the value of field %s
-     *
-     * @param %s \$%s
-     * @return \$this
-     */
     public function set%s(\$%s)
     {
         \$this->%s = \$%s;
@@ -86,15 +75,9 @@ EOD;
     public function getValidationsMethod(array $pieces)
     {
         $templateValidations = <<<EOD
-    /**
-     * Validations and business logic
-     *
-     * @return boolean
-     */
     public function validation()
     {
-        \$validator = new Validation();
-
+        \$validator = new \Phalcon\Validation();
 %s
     }
 EOD;
@@ -165,6 +148,17 @@ EOD;
         return sprintf($templateValidateEmail, $fieldName).PHP_EOL.PHP_EOL;
     }
 
+    public function getValidateUnique()
+    {
+        $templateValidateUnique = <<<EOD
+        \$validator->add(
+            [''],
+            new \Phalcon\Validation\Validator\Uniqueness()
+        );
+EOD;
+        return $templateValidateUnique.PHP_EOL.PHP_EOL;
+    }
+
     public function getValidationEnd()
     {
         $templateValidationFailed = <<<EOD
@@ -194,7 +188,7 @@ EOD;
                 $field->getName(),
                 $type,
                 $field->getSize() ? ', length=' . $field->getSize() : '',
-                $field->isNotNull() ? 'false' : 'true', $visibility, $fieldName).PHP_EOL;
+                $field->isNotNull() ? 'false' : 'true', $visibility, $fieldName) . PHP_EOL;
         } else {
             $templateAttributes = <<<EOD
     /**
@@ -211,11 +205,6 @@ EOD;
     public function getGetterMap($fieldName, $type, $setterName, $typeMap)
     {
         $templateGetterMap = <<<EOD
-    /**
-     * Returns the value of field %s
-     *
-     * @return %s
-     */
     public function get%s()
     {
         if (\$this->%s) {
@@ -231,11 +220,6 @@ EOD;
     public function getGetter($fieldName, $type, $getterName)
     {
         $templateGetter = <<<EOD
-    /**
-     * Returns the value of field %s
-     *
-     * @return %s
-     */
     public function get%s()
     {
         return \$this->%s;
@@ -247,9 +231,6 @@ EOD;
     public function getInitialize(array $pieces)
     {
         $templateInitialize = <<<EOD
-    /**
-     * Initialize method for model.
-     */
     public function initialize()
     {
 %s
@@ -261,12 +242,6 @@ EOD;
     public function getModelFind($className)
     {
         $templateFind = <<<EOD
-    /**
-     * Allows to query a set of records that match the specified conditions
-     *
-     * @param mixed \$parameters
-     * @return %s[]|%s|\Phalcon\Mvc\Model\ResultSetInterface
-     */
     public static function find(\$parameters = null)
     {
         return parent::find(\$parameters);
@@ -278,12 +253,6 @@ EOD;
     public function getModelFindFirst($className)
     {
         $templateFind = <<<EOD
-    /**
-     * Allows to query the first record that match the specified conditions
-     *
-     * @param mixed \$parameters
-     * @return %s|\Phalcon\Mvc\Model\ResultInterface
-     */
     public static function findFirst(\$parameters = null)
     {
         return parent::findFirst(\$parameters);
@@ -328,12 +297,6 @@ EOD;
     public function getColumnMap($fields, $camelize = false)
     {
         $template = <<<EOD
-    /**
-     * Independent Column Mapping.
-     * Keys are the real names in the table and the values their names in the application
-     *
-     * @return array
-     */
     public function columnMap()
     {
         return [

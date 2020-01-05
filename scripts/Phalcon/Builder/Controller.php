@@ -63,7 +63,11 @@ class Controller extends Component
         }
 
         $namespace = '';
-        if ($this->options->offsetExists('namespace') && $this->checkNamespace($this->options->get('namespace'))) {
+        if (
+            $this->options->offsetExists('namespace') &&
+            $this->checkNamespace($this->options->get('namespace')) &&
+            $this->options->get('namespace') //解决空命名空间的问题
+        ) {
             $namespace = 'namespace '.$this->options->get('namespace').';'.PHP_EOL.PHP_EOL;
         }
 

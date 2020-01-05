@@ -7,10 +7,10 @@ define('BASE_PATH', dirname(__DIR__));
 define('APP_PATH', BASE_PATH . '/app');
 
 include(BASE_PATH . '/vendor/autoload.php');
-$dotenv = new Dotenv\Dotenv(BASE_PATH);
+$dotenv = \Dotenv\Dotenv::create(BASE_PATH);
 $dotenv->load();
 
-define('LOG_PATH', getenv('LOG_PATH', '/var/log/phalcon'));
+define('LOG_PATH', getenv('LOG_PATH') ?: BASE_PATH . '/logs');
 include APP_PATH . '/config/errcode.php';
 
 ini_set('date.timezone', 'Asia/Shanghai');

@@ -129,7 +129,7 @@ abstract class ControllerBase extends \Phalcon\Mvc\Controller
 
     protected function addRules()
     {
-        $this->rules = RULES;
+        $this->rules = include_once(APP_PATH . '/config/rules.php');
     }
 
     //仅返回指定keys的字段,key不为数字时需要进行key转换

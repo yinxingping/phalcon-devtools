@@ -8,7 +8,7 @@ use Phalcon\Validation\Validator\Between;
 use Phalcon\Validation\Validator\Numericality;
 use Phalcon\Validation\Validator\Date as ValidDate;
 
-define('RULES', [
+return [
 /*
 * 自定义参数验证规则
 * 如下：
@@ -19,5 +19,5 @@ define('RULES', [
 *      'messageMinimum' => STATUS['name_invalid']['message'],
 *  ]),
 */
-]);
+];
 

@@ -83,7 +83,7 @@ abstract class ControllerBase extends \Phalcon\Mvc\Controller
 
     protected function addRules()
     {
-        $this->rules = RULES;
+        $this->rules = include_once(APP_PATH . '/config/rules.php');
     }
 
 }

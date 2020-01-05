@@ -2,7 +2,7 @@
 
 defined('BASE_PATH') || define('BASE_PATH', getenv('BASE_PATH') ?: realpath(dirname(__FILE__) . '/../..'));
 defined('APP_PATH') || define('APP_PATH', BASE_PATH . '/app');
-defined('LOG_PATH') || define('LOG_PATH', getenv('LOG_PATH', '/var/log/phalcon'));
+defined('LOG_PATH') || define('LOG_PATH', getenv('LOG_PATH') ?: BASE_PATH . '/logs');
 
 $appName = getenv('APP_NAME', '@@name@@');
 

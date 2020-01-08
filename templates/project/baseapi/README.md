@@ -10,10 +10,10 @@
 
 ## 注意事项
 
-1. 为了使用自动添加created_at的功能，数据库字段created_at必须设置默认为null
+1. 为了使用自动添加created_at/updated_at的功能，数据库字段created_at/updated_at必须设置默认为null
 2. 用工具生成model时.env部分没有生效，所以需要在config.php中修改数据库连接相关默认参数为实际开发环境的参数
 3. 生成模型的命令：
 ```
-phalcon model --excludefields=updated_at --extends=ModelBase --annotate --name=shops
+phalcon model --extends=ModelBase --annotate --name=shops
 ```
 

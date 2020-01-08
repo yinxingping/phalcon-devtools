@@ -38,6 +38,7 @@ class SimpleApi extends ProjectBuilder
         'app/config',
         'app/library',
         'public',
+        'logs',
         '.phalcon'
     ];
 

@@ -11,17 +11,16 @@ class ModelBase extends \Phalcon\Mvc\Model
 
         //仅向数据库传递改变了的字段
         $this->useDynamicUpdate(true);
+    }
 
-        $this->addBehavior(
-            new \Phalcon\Mvc\Model\Behavior\Timestampable(
-                [
-                    'beforeCreate' => [
-                        'field' => 'created_at',
-                        'format'=> 'Y-m-d H:i:s',
-                    ],
-                ]
-            )
-        );
+    public function beforeCreate()
+    {
+        $this->created_at = $this->updated_at = date('Y-m-d H:i:s');
+    }
+
+    public function beforeUpdate()
+    {
+        $this->updated_at = date('Y-m-d H:i:s');
     }
 
 }

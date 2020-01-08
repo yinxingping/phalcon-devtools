@@ -46,6 +46,7 @@ class Web extends ProjectBuilder
         'public/img',
         'public/css',
         'public/js',
+        'logs',
         '.phalcon'
     ];
 

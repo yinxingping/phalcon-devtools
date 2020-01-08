@@ -39,6 +39,7 @@ class Api extends ProjectBuilder
         'app/controllers',
         'app/library',
         'public',
+        'logs',
         '.phalcon'
     ];
 

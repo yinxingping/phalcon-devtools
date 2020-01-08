@@ -37,17 +37,18 @@ try {
     $di->setShared('config', function () use ($appName) {
         return include APP_PATH . "/config/config.php";
     });
-    $di->setShared('api', function () {
-        $loader = new \Phalcon\Loader();
-        $loader->registerClasses([
-            'API' => APP_PATH . '/library/API.php',
-        ]);
-        return new \API();
-    });
 
     $config = $di->getConfig();
+    $loader = new \Phalcon\Loader();
+    $loader->registerClasses([
+        'API' => APP_PATH . '/library/API.php',
+    ])->register();
+
+    $di->setShared('api', function () {
+        return new \API();
+    });
     $di->setShared('logger', function () use ($config) {
-        return \Phalcon\Logger\Factory($config->logger);
+        return \Phalcon\Logger\Factory::load($config->logger);
     });
 
     $app->setDi($di);

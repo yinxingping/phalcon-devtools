@@ -60,10 +60,6 @@ class SimpleApi extends ProjectBuilder
         $putFile = $this->options->get('projectPath') . 'app/app.php';
         $this->generateFile($getFile, $putFile);
 
-        $getFile = $this->options->get('templatePath') . '/project/simpleapi/errcode.php';
-        $putFile = $this->options->get('projectPath') . 'app/config/errcode.php';
-        $this->generateFile($getFile, $putFile);
-
         return $this;
     }
 
@@ -126,7 +122,6 @@ class SimpleApi extends ProjectBuilder
             ->createConfig()
             ->createBootstrapFile()
             ->createLibrary()
-            ->createControllers()
             ->createAdditionals();
 
         return true;

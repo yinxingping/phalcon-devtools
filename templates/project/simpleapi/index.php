@@ -11,7 +11,6 @@ $dotenv = \Dotenv\Dotenv::create(BASE_PATH);
 $dotenv->load();
 
 define('LOG_PATH', getenv('LOG_PATH') ?: BASE_PATH . '/logs');
-include APP_PATH . '/config/errcode.php';
 
 ini_set('date.timezone', 'Asia/Shanghai');
 ini_set('display_errors', 'off');

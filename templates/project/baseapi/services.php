@@ -93,10 +93,6 @@ $di->setShared('redis', function () {
     return $redis;
 });
 
-$di->setShared('transactionManager', function () {
-    return new \Phalcon\Mvc\Model\Transaction\Manager();
-});
-
 $di->setShared('profiler', function () {
     return new \Phalcon\Db\Profiler();
 });
@@ -108,10 +104,3 @@ $di->setShared('logger', function () {
     return $logger;
 });
 
-$di->setShared('security', function () {
-    $security = new \Phalcon\Security();
-
-    $security->setWorkFactor(12);
-
-    return $security;
-});

@@ -24,25 +24,6 @@ class API implements Phalcon\Di\InjectionAwareInterface
         ];
     }
 
-    //业务请求实例
-    public function users($action, &$result, $data)
-    {
-        switch ($action) {
-            case 'login':
-                $method = 'post';
-                break;
-            case 'register':
-                $method = 'post';
-                break;
-        }
-
-        $url = getenv('USERS_BASE_API') . '/' . $action;
-        if (!$this->request($method, $url, $result, $data)) {
-            return false;
-        }
-        return true;
-    }
-
     //对网络请求成功返回的数据进一步进行业务错误代码判断和日志记录
     private function request($method, $url, &$result, $data=null, $headers=[])
     {

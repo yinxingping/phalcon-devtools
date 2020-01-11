@@ -53,7 +53,7 @@ $di->setShared('modelsMetadata', function () {
 
 $di->setShared('eventsManager', function () {
     $eventManager = new \Phalcon\Events\Manager();
-    $profiler = $this->getProfiler();
+    $profiler = new \Phalcon\Db\Profiler();
 
     // 记录sql详情
     $eventManager->attach(
@@ -91,10 +91,6 @@ $di->setShared('redis', function () {
     $redis->setOption(Redis::OPT_PREFIX, $redisConfig->prefix ?? '');
 
     return $redis;
-});
-
-$di->setShared('profiler', function () {
-    return new \Phalcon\Db\Profiler();
 });
 
 $di->setShared('logger', function () {

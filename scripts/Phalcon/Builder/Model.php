@@ -476,7 +476,7 @@ class Model extends Component
             }
         }
         //唯一性验证，若无可生成后手动删除
-        $validations[] = $snippet->getValidateUnique();
+        //$validations[] = $snippet->getValidateUnique();
         if (count($validations)) {
             $validations[] = $snippet->getValidationEnd();
         }

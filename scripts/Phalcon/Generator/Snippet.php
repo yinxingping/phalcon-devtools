@@ -233,6 +233,7 @@ EOD;
         $templateInitialize = <<<EOD
     public function initialize()
     {
+        parent::initialize();
 %s
     }
 EOD;

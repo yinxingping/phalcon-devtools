@@ -34,7 +34,7 @@ try {
     $di->setShared('router', function () {
         return new \Phalcon\Mvc\Router();
     });
-    $di->setShared('config', function () use ($appName) {
+    $di->setShared('config', function () {
         return include APP_PATH . "/config/config.php";
     });
 

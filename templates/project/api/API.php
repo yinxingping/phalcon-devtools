@@ -25,7 +25,7 @@ class API implements Phalcon\Di\InjectionAwareInterface
     }
 
     //对网络请求成功返回的数据进一步进行业务错误代码判断和日志记录
-    private function request($method, $url, &$result, $data=null, $headers=[])
+    public function request($method, $url, &$result, $data=null, $headers=[])
     {
         $method = strtoupper($method);
         if (in_array($method, ['POST', 'PUT', 'OPTIONS', 'PATCH'])) {

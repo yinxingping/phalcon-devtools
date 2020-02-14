@@ -24,10 +24,6 @@ $di->setShared('session', function () {
     return $session;
 });
 
-$di->setShared('dispatcher', function () {
-    return new \Phalcon\Mvc\Dispatcher();
-});
-
 $di->setShared('logger', function () {
     $logger = \Phalcon\Logger\Factory::load($this->getConfig()->logger);
     $logger->setFormatter(new \Phalcon\Logger\Formatter\Line('%type%|%date%|%message%'));

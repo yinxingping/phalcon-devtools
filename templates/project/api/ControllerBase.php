@@ -74,6 +74,26 @@ abstract class ControllerBase extends \Phalcon\Mvc\Controller
         return $params;
     }
 
+    protected function addRules()
+    {
+        $this->rules = include_once(APP_PATH . '/config/rules.php');
+    }
+
+    //仅返回指定keys的字段,key不为数字时需要进行key转换
+    protected function getPartData($data, $keys)
+    {
+        $newArr = [];
+        foreach ($keys as $k => $v) {
+            if (is_numeric($k)) {
+                $newArr[$v] = is_array($data) ? $data[$v] : $data->$v;
+            } else {
+                $newArr[$v] = is_array($data) ? $data[$k] : $data->$k;
+            }
+        }
+
+        return $newArr;
+    }
+
     /*
      * 仅对需要过滤的参数进行验证
      */
@@ -107,26 +127,6 @@ abstract class ControllerBase extends \Phalcon\Mvc\Controller
                 exit;
             }
         }
-    }
-
-    protected function addRules()
-    {
-        $this->rules = include_once(APP_PATH . '/config/rules.php');
-    }
-
-    //仅返回指定keys的字段,key不为数字时需要进行key转换
-    public function getPartData($data, $keys)
-    {
-        $newArr = [];
-        foreach ($keys as $k => $v) {
-            if (is_numeric($k)) {
-                $newArr[$v] = is_array($data) ? $data[$v] : $data->$v;
-            } else {
-                $newArr[$v] = is_array($data) ? $data[$k] : $data->$k;
-            }
-        }
-
-        return $newArr;
     }
 
 }
